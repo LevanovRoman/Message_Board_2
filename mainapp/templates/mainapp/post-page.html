@@ -1,0 +1,77 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block one_post %}
+<section id="reviews" class="bg-light">
+    <div class="row justify-content-center my-5">
+      <div class="col-lg-8">
+        <div class="list-group">
+          <div class="list-group-item py-3">
+
+			  <div class="card">
+
+      <div class="embed-responsive embed-responsive-4by3">
+        {% if post.photo %}
+        <img src="{{post.photo.url}}" class="card-img-top" alt="...">
+        {% else %}
+        <img src="{% static 'mainapp/images/card.jpg' %}" class="card-img-top" alt="...">
+      {% endif %}
+     </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ post.title }}</h5>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">{{ post.text }}</li>
+    <li class="list-group-item">Автор: {{ post.user }}</li>
+    <li class="list-group-item">Категория: {{ post.category }}</li>
+    <li class="list-group-item">Видео:
+      {% if post.video_file %}
+      <video width="500px" height="500px" controls>
+        <source src="{{ post.video_file.url }}" type="video/mp4">
+      </video>
+        {% else %}
+        нет видео
+      {% endif %}
+    </li>
+    <li class="list-group-item">Дата:  {{ post.time_created }}</li>
+  </ul>
+ {% if user.username == post.user.username %}
+  <div class="card-body">
+    <a href='{% url "update_post" slug=post.slug %}' class="btn btn-primary">Редактировать</a>
+    <a href='{% url "delete_post" slug=post.slug %}' class="btn btn-primary">Удалить</a>
+  </div>
+ {% endif %}
+
+  </div>
+
+    <hr>
+    <p class="fw-bold text-secondary">Комментарии: ({{ post.post_comment.all.count }}) </p>
+    {% for item in post.post_comment.all %}
+    <div class="comments">
+        <p class="fw-bold"> {{ item.user }} </p>
+        <p>  {{ item.text }} </p>
+        <p class="date-comm"> {{ item.time_created }}</p>
+    </div>
+     <hr>
+    {% endfor %}
+    <hr>
+
+{% if request.user.is_authenticated %}
+    <p>А что думаешь ты,<span class=" fw-bold author-red"> {{ request.user.username }}</span>, по этому поводу?</p>
+    <form action="" method="post">
+        {%csrf_token%}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-primary">Добавить</button>
+    </form>
+ {% else %}
+    <h3>Зарегистрируйтесь и сможете оставить комментарий</h3>
+  {% endif %}
+
+ </div>
+  </div>
+ </div>
+ </div>
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block one_post %}
+
+
+
+<section id="reviews" class="bg-light">
+    <div class="row justify-content-center my-5">
+      <div class="col-lg-8">
+        <div class="list-group">
+          <div class="list-group-item py-3">
+
+        <div class=" mb-5 mt-5 ">
+                <form action="" method="get">
+                    {{ filterset.form.as_p }}
+                    <input type="submit" value="Найти" />
+                </form>
+             </div>
+
+   {% for c in comments %}
+  <div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Текст:  {{ c.text }}</h5>
+  </div>
+  <ul class="list-group list-group-flush">
+<!--    <li class="list-group-item">{{ com.text }}</li>-->
+<!--    <li class="list-group-item">Автор: {{ com.user }}</li>-->
+    <li class="list-group-item">Статус: {{ c.status }}</li>
+    <li class="list-group-item">Имя: {{ c.user.username }}</li>
+    <li class="list-group-item">Пост: {{ c.post.title }}</li>
+      <div class="card-body">
+<!--        <a href='#' class="btn btn-primary">Редактировать</a>-->
+<!--        <a href='#' class="btn btn-primary">Удалить</a>-->
+          {% if not c.status  %}
+          <form action="{% url 'comm_add' slug=c.slug %}" method="get">
+
+        <button type="submit" class="btn btn-primary mb-2">Принять</button>
+    </form>
+          {% endif %}
+          <form action="{% url 'comm_delete' slug=c.slug %}" method="get">
+
+        <button type="submit" class="btn btn-primary">Удалить</button>
+          </form>
+
+
+     </div>
+  </ul>
+
+  </div>
+ {% endfor %}
+ </div>
+  </div>
+ </div>
+ </div>
+</section>
+
+
+{% endblock %}

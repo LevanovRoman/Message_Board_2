@@ -1,0 +1,22 @@
+{% extends 'mainapp/login-base.html' %}
+
+{% block content %}
+otp page
+{% if error_message %}
+    <p>{{ error_message }}</p>
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+    <div>
+        <label for="otp">otp:</label>
+        <input type="text" class="form-control" name="otp" required>
+    </div>
+
+    <div>
+        <input type="submit" class="btn btn-primary mt-3" value="confirm">
+    </div>
+
+</form>
+
+{% endblock content %}

@@ -1,0 +1,32 @@
+{% extends 'mainapp/login-base.html' %}
+
+{% block content %}
+
+{% if error_message %}
+    <p>{{ error_message }}</p>
+{% endif %}
+<h2><i class="bi bi-stars"></i> Регистрация</h2>
+<form method="POST">
+    {% csrf_token %}
+    <div>
+        <label for="username">username:</label>
+        <input type="text" class="form-control" name="username" required>
+    </div>
+    <div>
+        <label for="email">email:</label>
+        <input type="text" class="form-control" name="email" required>
+    </div>
+    <div>
+        <label for="password">password:</label>
+        <input type="text" class="form-control" name="password" required>
+    </div>
+    <div>
+        <label for="password2">password2:</label>
+        <input type="text" class="form-control" name="password2" required>
+    </div>
+    <div>
+        <input type="submit" class="btn btn-primary mt-3" value="registr">
+    </div>
+
+</form>
+{% endblock content %}

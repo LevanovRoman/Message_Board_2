@@ -1,0 +1,10 @@
+{% extends 'mainapp/post-page.html' %}
+
+{% block one_post %}
+<h1>{{ type }}</h1>
+<hr>
+<form method="post">{% csrf_token %}
+    <p>Вы уверены, что хотите удалить пост "{{ object }}"?</p>
+    <input type="submit" value="Подтвердить">
+</form>
+{% endblock %}
